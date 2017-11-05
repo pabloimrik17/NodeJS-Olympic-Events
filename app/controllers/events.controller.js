@@ -8,14 +8,24 @@ module.exports = {
 
 function showEvents(req, res) {
     Event.find({}, (err, events) => {
+        if(err) {
+            res.status(404);
+            res.send('Events not found');
+        }
+
         res.render('pages/events', {events: events});
     })
 }
 
 function showEvent(req, res) {
-    const event = {name: 'Basketball', slug: 'basketball', description: 'Throwing into a basket.'};
+    Event.findOne({slug: req.params.slug}, (err, event) => {
+        if(err) {
+            res.status(404);
+            res.send('Event not found');
+        }
 
-    res.render('pages/event', {event: event});
+        res.render('pages/event', {event: event});
+    })
 }
 
 function seedEvents(req, res) {
