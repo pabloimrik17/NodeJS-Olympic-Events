@@ -4,12 +4,15 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8082;
 const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
 
 // CONFIG
 app.use(express.static(`${__dirname}/public`));
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
+
+mongoose.connect(process.env.DB_CONECTION, {useMongoClient: true});
 
 // ROUTES
 app.use(require('./app/routes'));
