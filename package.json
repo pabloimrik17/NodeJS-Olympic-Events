@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-olympic-events",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pabloimrik17/NodeJS-Olympic-Events.git"
+  },
+  "author": "Pablo F. Guerra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pabloimrik17/NodeJS-Olympic-Events/issues"
+  },
+  "homepage": "https://github.com/pabloimrik17/NodeJS-Olympic-Events#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
