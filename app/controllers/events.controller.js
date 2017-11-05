@@ -3,7 +3,9 @@ const Event = require('../models/event.model');
 module.exports = {
     showEvents: showEvents,
     showEvent: showEvent,
-    seedEvents: seedEvents
+    seedEvents: seedEvents,
+    showCreateEvent: showCreateEvent,
+    createEvent: createEvent
 };
 
 function showEvents(req, res) {
@@ -13,7 +15,7 @@ function showEvents(req, res) {
             res.send('Events not found');
         }
 
-        res.render('pages/events', {events: events});
+        res.render('pages/events/events', {events: events});
     })
 }
 
@@ -24,8 +26,27 @@ function showEvent(req, res) {
             res.send('Event not found');
         }
 
-        res.render('pages/event', {event: event});
+        res.render('pages/events/event', {event: event});
     })
+}
+
+function showCreateEvent(req, res) {
+    res.render('pages/events/createEvent')
+}
+
+function createEvent(req, res) {
+    const event = new Event({
+        name: req.body.name,
+        description: req.body.description
+    });
+
+    event.save((err) => {
+        if(err){
+            throw err;
+        }
+
+        res.redirect(`/events/${event.slug}`);
+    });
 }
 
 function seedEvents(req, res) {
