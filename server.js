@@ -1,10 +1,10 @@
 const express = require('express');
-const app = express();
-const port = process.env.PORT || 8080;
+require('dotenv').config();
 
-app.get('/', function (req, res) {
-   res.send('Hello, i am the app!');
-});
+const app = express();
+const port = process.env.PORT || 8082;
+
+app.use(require('./app/routes'));
 
 app.listen(port, () => {
     console.log(`App listeting on http://localhost:${port}`)
