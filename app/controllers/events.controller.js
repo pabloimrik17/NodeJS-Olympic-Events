@@ -8,6 +8,12 @@ module.exports = {
         ];
 
         res.render('pages/events', { events: events});
+    },
+
+    showEvent: (req, res) => {
+        const event = { name: 'Basketball', slug: 'basketball', description: 'Throwing into a basket.' };
+
+        res.render('pages/event', { event: event});
     }
 
 };
