@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const validator = require('express-validator');
 
 // CONFIG
 app.use(cookieParser());
@@ -28,6 +29,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(validator());
 
 mongoose.connect(process.env.DB_CONECTION, {useMongoClient: true});
 

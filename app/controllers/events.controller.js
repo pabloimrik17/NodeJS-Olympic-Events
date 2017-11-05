@@ -34,10 +34,22 @@ function showEvent(req, res) {
 }
 
 function showCreateEvent(req, res) {
-    res.render('pages/events/createEvent')
+    res.render('pages/events/createEvent', {
+        errors: req.flash('errors')
+    })
 }
 
 function createEvent(req, res) {
+
+    req.checkBody('name', 'Name is required').notEmpty(); // Express Validator
+    req.checkBody('description', 'Description is required').notEmpty(); // Express Validator
+
+    const errors = req.validationErrors();
+    if(errors) {
+        req.flash('errors', errors.map(err => err.msg));
+        return res.redirect('/events/create');
+    }
+
     const event = new Event({
         name: req.body.name,
         description: req.body.description
