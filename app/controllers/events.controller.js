@@ -26,7 +26,10 @@ function showEvent(req, res) {
             res.send('Event not found');
         }
 
-        res.render('pages/events/event', {event: event});
+        res.render('pages/events/event', {
+            event: event,
+            success: req.flash('success')
+        });
     })
 }
 
@@ -45,6 +48,7 @@ function createEvent(req, res) {
             throw err;
         }
 
+        req.flash('success', 'Successfully created event!');
         res.redirect(`/events/${event.slug}`);
     });
 }
