@@ -17,4 +17,6 @@ router.get('/events/:slug', eventsController.showEvent);
 router.get('/events/:slug/edit', eventsController.showEditEvent);
 router.post('/events/:slug', eventsController.editEvent);
 
+router.get('/events/:slug/delete', eventsController.deleteEvent);
+
 module.exports = router;

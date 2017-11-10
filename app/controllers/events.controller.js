@@ -7,7 +7,8 @@ module.exports = {
     showCreateEvent: showCreateEvent,
     createEvent: createEvent,
     showEditEvent: showEditEvent,
-    editEvent: editEvent
+    editEvent: editEvent,
+    deleteEvent: deleteEvent
 };
 
 function showEvents(req, res) {
@@ -122,4 +123,16 @@ function seedEvents(req, res) {
     });
 
     res.send("Database seeded!");
+}
+
+function deleteEvent(req, res) {
+
+    Event.remove({slug: req.params.slug}, (err) => {
+        if(err) {
+            throw err;
+        }
+
+        req.flash('success', 'Event deleted');
+        res.redirect('/events')
+    })
 }
