@@ -5,7 +5,9 @@ module.exports = {
     showEvent: showEvent,
     seedEvents: seedEvents,
     showCreateEvent: showCreateEvent,
-    createEvent: createEvent
+    createEvent: createEvent,
+    showEditEvent: showEditEvent,
+    editEvent: editEvent
 };
 
 function showEvents(req, res) {
@@ -15,7 +17,10 @@ function showEvents(req, res) {
             res.send('Events not found');
         }
 
-        res.render('pages/events/events', {events: events});
+        res.render('pages/events/events', {
+            events: events,
+            success: req.flash('success')
+        });
     })
 }
 
@@ -62,6 +67,41 @@ function createEvent(req, res) {
 
         req.flash('success', 'Successfully created event!');
         res.redirect(`/events/${event.slug}`);
+    });
+}
+
+function showEditEvent(req, res) {
+    Event.findOne({slug: req.params.slug}, (err, event) => {
+        res.render('pages/events/editEvent', {
+            event: event,
+            errors: req.flash('errors')
+        });
+    });
+}
+
+function editEvent(req, res) {
+
+    req.checkBody('name', 'Name is required').notEmpty(); // Express Validator
+    req.checkBody('description', 'Description is required').notEmpty(); // Express Validator
+
+    const errors = req.validationErrors();
+    if(errors) {
+        req.flash('errors', errors.map(err => err.msg));
+        return res.redirect(`/events/${req.params.slug}/edit`);
+    }
+
+    Event.findOne({slug: req.params.slug}, (err, event) => {
+        event.name = req.body.name;
+        event.description = req.body.description;
+
+        event.save((err) => {
+            if(err) {
+                throw err;
+            }
+
+            req.flash('success', 'Successfully upated event.');
+            res.redirect('/events');
+        })
     });
 }
 
